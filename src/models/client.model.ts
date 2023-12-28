@@ -7,8 +7,11 @@ const ClientSchema = new Schema(
     email: { type: String, required: true },
     fathername: { type: String, required: true},
     age: { type: String, required: true, unique: true },
+    password: { type: String, required: true, unique: true },
     city: { type: String, default: null },
     pincode: { type: String, required: false, defalut: null },
+    device_type: { type: [String],default:null },
+    device_token: { type: [String],default:null },
   }, { timestamps: true, versionKey: false }
 
 )

@@ -1,0 +1,39 @@
+2023-12-19T09:44:52.149Z [31merror[39m: ::1 "lastname" must be a valid email
+2023-12-19T09:56:47.580Z [31merror[39m: ::1 "firstname" is required
+2023-12-19T09:58:47.694Z [31merror[39m: ::1 "age" must be a string
+2023-12-19T09:59:34.389Z [31merror[39m: ::1 "age" must be a string
+2023-12-19T10:00:04.255Z [31merror[39m: ::1 "pincode" must be a string
+2023-12-20T06:09:29.233Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "poter" }
+2023-12-20T06:13:04.515Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "poter" }
+2023-12-20T06:13:13.838Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "poter" }
+2023-12-20T06:15:05.708Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "poter" }
+2023-12-20T06:15:47.684Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: age_1 dup key: { age: "123" }
+2023-12-20T10:11:29.049Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: age_1 dup key: { age: "12" }
+2023-12-20T12:58:37.599Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: age_1 dup key: { age: "23" }
+2023-12-21T15:50:33.355Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: age_1 dup key: { age: "67" }
+2023-12-22T10:18:03.582Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "kathuria" }
+2023-12-22T10:18:47.188Z [31merror[39m: ::1 undefined
+2023-12-22T10:20:00.974Z [31merror[39m: ::1 User doesn't exists!
+2023-12-22T10:20:10.296Z [31merror[39m: ::1 Password seems to be incorrect
+2023-12-22T10:20:15.973Z [31merror[39m: ::1 undefined
+2023-12-22T10:56:56.437Z [31merror[39m: ::1 undefined
+2023-12-22T10:58:22.467Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "kathuria1" }
+2023-12-22T10:58:30.202Z [31merror[39m: ::1 undefined
+2023-12-22T11:13:09.144Z [31merror[39m: ::1 undefined
+2023-12-22T11:16:05.240Z [31merror[39m: ::1 undefined
+2023-12-22T11:43:21.825Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:43:21.839Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:43:39.794Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:43:43.786Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:43:49.785Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:43:52.795Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:44:19.766Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:44:19.773Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:45:38.595Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:45:38.603Z [31merror[39m: ::1 "email" is required
+2023-12-22T11:46:38.795Z [31merror[39m: ::1 "email" is required
+2023-12-22T13:17:52.880Z [31merror[39m: ::1 undefined
+2023-12-22T13:18:39.237Z [31merror[39m: ::1 undefined
+2023-12-22T13:19:32.096Z [31merror[39m: ::1 undefined
+2023-12-22T16:12:25.480Z [31merror[39m: ::1 E11000 duplicate key error collection: mydemo.clients index: lastname_1 dup key: { lastname: "kathuria" }
+2023-12-22T16:13:30.875Z [31merror[39m: ::1 User doesn't exists!
