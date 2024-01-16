@@ -1,6 +1,6 @@
 import joi from '@hapi/joi';
 
-const clientProfileSchema = joi.object({
+const LabourProfileSchema = joi.object({
     firstname: joi.string().trim().required(),
     lastname: joi.string().trim(),
     email: joi.string().trim().email().required(),
@@ -15,7 +15,7 @@ const userProfileSchema = joi.object({
     password: joi.string().optional(),
 })
 export const validateClientData = (client: any) => {
-    return clientProfileSchema.validate(client)
+    return LabourProfileSchema.validate(client)
 }
 export const validateClient = (client: any) => {
     return userProfileSchema.validate(client)

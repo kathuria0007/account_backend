@@ -50,6 +50,125 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/api/admin/createworkforlabour": {
+			"post": {
+				"operationId": "Createworkforlabour",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Admin"
+				],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"clientcity": {
+										"type": "string"
+									},
+									"clientpincode": {
+										"type": "string"
+									},
+									"clientlocation": {
+										"type": "string"
+									},
+									"clientage": {
+										"type": "string"
+									},
+									"nameofclient": {
+										"type": "string"
+									},
+									"labouremail": {
+										"type": "string"
+									},
+									"labourage": {
+										"type": "string"
+									},
+									"labourlastname": {
+										"type": "string"
+									},
+									"labourfirstname": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"clientcity",
+									"clientpincode",
+									"clientlocation",
+									"clientage",
+									"nameofclient",
+									"labouremail",
+									"labourage",
+									"labourlastname",
+									"labourfirstname"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/admin/getalllabourworks": {
+			"get": {
+				"operationId": "Getalllabourworks",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Admin"
+				],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "search",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/api/client/register": {
 			"post": {
 				"operationId": "Register",
@@ -231,6 +350,80 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/api/client/getmywork": {
+			"get": {
+				"operationId": "Getmywork",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Client"
+				],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/api/client/submitmywork": {
+			"put": {
+				"operationId": "Submitmywork",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Client"
+				],
+				"security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": false,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"id": {
+										"type": "string"
+									},
+									"statusofwork": {
+										"type": "string"
+									},
+									"image": {
+										"type": "string",
+										"format": "binary"
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	},

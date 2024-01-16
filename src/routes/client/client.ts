@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express'
 import ClientController from '../../controllers/client.controller'
 import multerMiddleware from '../../middlewares/multer.middleware'
 import { responseWithStatus } from '../../utils/response.util'
-import { authenticateClient } from '../../controllers/auth.middleware'
+import { authenticateClient } from '../../middlewares/auth.middleware'
 const router = express.Router()
 router.post('/register', async (req: Request | any, res: Response) => {
     const { firstname, lastname, email,fathername, age, city, pincode ,password} = req.body;
@@ -32,6 +32,19 @@ router.post('/login', async (req: Request | any, res: Response) => {
 router.get('/me', authenticateClient, async (req: Request | any, res: Response) => {
     const controller = new ClientController(req, res)
     const response = await controller.me();
+    const { status } = response;
+    return responseWithStatus(res, status, response)
+})
+router.get('/getmywork', authenticateClient, async (req: Request | any, res: Response) => {
+    const controller = new ClientController(req, res)
+    const response = await controller.getmywork();
+    const { status } = response;
+    return responseWithStatus(res, status, response)
+})
+router.put('/submitmywork', authenticateClient,multerMiddleware.single('image'), async (req: Request | any, res: Response) => {
+    const {id,statusofwork}=req.body;
+    const controller = new ClientController(req, res)
+    const response = await controller.submitmywork(id,statusofwork,req.file);
     const { status } = response;
     return responseWithStatus(res, status, response)
 })

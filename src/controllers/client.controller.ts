@@ -3,7 +3,9 @@ import { Route, Controller, Tags, Post, Body, Security, Query, UploadedFile, Get
 import { Request, Response, response } from 'express';
 import { IResponse } from '../utils/interfaces.util';
 import { findOne, getById, upsert, getAll, findAll, getAlls, getAggregation } from '../helpers/db.helpers';
-import clientModel from '../models/client.model';
+import LabourModel from '../models/client.model';
+import DailyWorkModel from '../models/work.model';
+import mongoose from "mongoose";
 import logger from '../configs/logger.config';
 import { sendEmail } from '../configs/nodemailer';
 import { readHTMLFile, getCSVFromJSON, generateRandomOtp } from '../services/utils';
@@ -30,22 +32,17 @@ export default class ClientController extends Controller {
     public async register(@Body() request: { firstname: string, lastname: string, email: string, fathername: string, age: string, city: string, pincode: string,password: string }): Promise<IResponse> {
         try {
 
-            const {  firstname, lastname, email,fathername, age, city, pincode ,password } = request;
-            const validatedProfile = validateClientData({ firstname, lastname, email,fathername, age, city, pincode,password });
-            if (validatedProfile.error) {
-                throw new Error(validatedProfile.error.message)
-            }
-            const userEmail = await findOne(clientModel, { email });
+            const {  firstname, lastname, email,fathername, age, city, pincode ,password } = request;            
+            const userEmail = await findOne(LabourModel, { email });
             if (userEmail) {
                 throw new Error(`Email ${email} is already exists`)
             }
             let hashed = await genHash(password);
-            const saveResponse = await upsert(clientModel, { firstname, lastname, email,fathername, age, city, pincode , password: hashed })
-
+            const saveResponse = await upsert(LabourModel, { firstname, lastname, email,fathername, age, city, pincode , password: hashed })
                 return {
                     data: { ...saveResponse.toObject() },
                     error: '',
-                    message: 'User Subscribed Successfully',
+                    message: 'Labour added Successfully',
                     status: 200
                 }
         }
@@ -67,7 +64,7 @@ export default class ClientController extends Controller {
             if (validatedUser.error) {
                 throw new Error(validatedUser.error.message)
             }
-            const exists = await findOne(clientModel, { email });
+            const exists = await findOne(LabourModel, { email });
             if (!exists) {
                 throw new Error('User doesn\'t exists!');
             }
@@ -75,7 +72,7 @@ export default class ClientController extends Controller {
             if (!isValid) {
                 throw new Error('Password seems to be incorrect');
             }
-            let response = await upsert(clientModel, { device_type: device_type, device_token: device_token }, exists._id);
+            let response = await upsert(LabourModel, { device_type: device_type, device_token: device_token }, exists._id);
             const token = await signToken(exists._id,{ access: 'client', purpose: 'reset' })
             
             delete exists.password
@@ -103,7 +100,7 @@ export default class ClientController extends Controller {
     ): Promise<IResponse> {
         try {
             // check for a valid id
-            const getResponse = await getAll(clientModel,{});
+            const getResponse = await getAll(LabourModel,{});
             if(exportRequest==="true")
             {
                     const csv = getCSVFromJSON(
@@ -164,7 +161,7 @@ export default class ClientController extends Controller {
     @Get("/me")
     public async me(): Promise<IResponse> {
         try {
-            const getResponse = await getById(clientModel, this.userId);
+            const getResponse = await getById(LabourModel, this.userId);
             return {
                 data: getResponse || {},
                 error: '',
@@ -181,5 +178,56 @@ export default class ClientController extends Controller {
             }
         }
     }
+    @Security("Bearer")
+    @Get("/getmywork")
+    public async getmywork(): Promise<IResponse> {
+      try {
+    
+        let mydailywork = await findAll(DailyWorkModel, { labourid: new mongoose.Types.ObjectId(this.userId) });            
+        return {
+          data: mydailywork,
+          error: "",
+          message: "my work fetched successfully",
+          status: 200,
+        };
+      } catch (err: any) {
+        logger.error(`${this.req.ip} ${err.message}`);
+        return {
+          data: null,
+          error: err.message ? err.message : err,
+          message: "",
+          status: 400,
+        };
+      }
+    }
+    //submit or update status of my work
+    @Security('Bearer')
+    @Put("/submitmywork")
+    public async submitmywork(@FormField() id?: string,@FormField() statusofwork?: string ,@UploadedFile() image?:Express.Multer.File): Promise<IResponse> {
+        try {
+            const findvalidwork=await findOne(DailyWorkModel,{_id:id});
+            if(!findvalidwork)
+            {
+                throw new Error('The work for labour not found');
+            }
+            const updatemyworkstatus = await upsert(DailyWorkModel, { statusofwork:statusofwork ,image:image?.originalname}, id);
+
+            return {
+                data: updatemyworkstatus,
+                error: '',
+                message: 'Work submitted status updated and submitted successfully',
+                status: 200
+            };
+        } catch (err: any) {
+            return {
+                data: null,
+                error: err.message ? err.message : err,
+                message: 'Error on submitting the work',
+                status: 400
+            };
+        }
+    }
+
+
 }
 
